@@ -1,5 +1,6 @@
 from django.db import models
 
+from clarity_project.applications.models import SchoolApplication
 from clarity_project.core.mixins import BaseModel
 from clarity_project.rules.enums import ActionChoices
 from clarity_project.rules.enums import ConditionChoices
@@ -21,6 +22,13 @@ class Action(BaseModel):
 
 
 class Rule(BaseModel):
-    triggers = models.ManyToManyField(Trigger)
-    conditions = models.ManyToManyField(Condition)
-    actions = models.ManyToManyField(Action)
+    trigger = models.ForeignKey(Trigger, on_delete=models.PROTECT, related_name="rules")
+    conditions = models.ManyToManyField(Condition, related_name="rules")
+    actions = models.ManyToManyField(Action, related_name="rules")
+    enabled = models.BooleanField(default=True)
+
+
+class RuleRun(BaseModel):
+    rule = models.ForeignKey(Rule, on_delete=models.PROTECT, related_name="rule_runs")
+    school_application = models.ForeignKey(SchoolApplication, on_delete=models.PROTECT, related_name="rule_runs")
+    completed = models.BooleanField(default=False)
