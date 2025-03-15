@@ -1,0 +1,110 @@
+x-env:
+  &local-env
+  - DJANGO_READ_DOT_ENV_FILE=True
+  - DJANGO_SETTINGS_MODULE=config.settings.local
+  - DEBUG=True
+  - CELERY_BROKER_URL=amqp://clarity_app:password@rabbitmq:5672//
+  - CELERY_RESULT_BACKEND=redis://redis:6379/0
+  - REDIS_URL=redis://redis:6379/0
+  - CELERY_FLOWER_USER=user
+  - CELERY_FLOWER_PASSWORD=password
+  - POSTGRES_HOST=postgres
+  - POSTGRES_PORT=5432
+  - POSTGRES_DB=clarity_app
+  - POSTGRES_USER=clarity_app
+  - POSTGRES_PASSWORD=password
+  - DATABASE_URL=postgres://clarity_app:password@postgres:5432/clarity_app
+  - USE_DOCKER=yes
+  - PYTHONPATH=/code
+x-env-files:
+  &local-env-file
+  - .env
+
+services:
+  django: &django
+    build: .
+    image: clarity_app_local_django
+    container_name: clarity_app_local_django
+    command: /start
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+      - celeryworker
+    user: app
+    networks:
+      - local
+      - cluster
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    environment: *local-env
+    env_file: *local-env-file
+  celeryworker:
+    <<: *django
+    image: clarity_app_local_celeryworker
+    container_name: clarity_app_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+      - rabbitmq
+    ports: [ ]
+    command: /start-celeryworker
+  celerybeat:
+    <<: *django
+    image: clarity_app_local_celerybeat
+    container_name: clarity_app_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+      - rabbitmq
+    ports: [ ]
+    command: /start-celerybeat
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: clarity_app
+      POSTGRES_DB: clarity_app
+      PGDATA: /var/lib/postgresql@16/data:rw
+    volumes:
+      - pgdata:/var/lib/postgresql@16/data:rw
+    networks:
+      - local
+    ports:
+      - "5432:5432"
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    restart: always
+    networks:
+      - local
+    ports:
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: clarity_app
+      RABBITMQ_DEFAULT_PASS: password
+  redis:
+    image: valkey/valkey:8
+    restart: always
+    networks:
+      - local
+    ports:
+      - "6379:6379"
+  flower:
+    <<: *django
+    image: clarity_app_local_flower
+    container_name: clarity_app_local_flower
+    ports:
+      - '5555:5555'
+    command: /start-flower
+
+volumes:
+  pgdata:
+networks:
+  local:
+    driver: bridge
+  cluster:
+    driver: bridge
+    name: clarity_app_cluster
