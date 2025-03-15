@@ -1,7 +1,10 @@
 from django.db import models
 
 from clarity_project.core.mixins import BaseModel
-from clarity_project.rules.enums import TriggerChoices, ConditionChoices, ActionChoices, ConditionConjunctionChoices
+from clarity_project.rules.enums import ActionChoices
+from clarity_project.rules.enums import ConditionChoices
+from clarity_project.rules.enums import ConditionConjunctionChoices
+from clarity_project.rules.enums import TriggerChoices
 
 
 class Trigger(BaseModel):
