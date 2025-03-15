@@ -19,8 +19,9 @@ class SchoolApplicationViewSet(
         serializer.save()
         school_application_id = serializer.data["id"]
 
-        application_submission_rules = Rule.objects.filter(trigger__trigger_type=TriggerChoices.APPLICATION_SUBMISSION,
-                                                           enabled=True)
+        application_submission_rules = Rule.objects.filter(
+            trigger__trigger_type=TriggerChoices.APPLICATION_SUBMISSION, enabled=True
+        )
         for rule in application_submission_rules:
             rule_run = RuleRun.objects.create(rule=rule, school_application_id=school_application_id)
             execute_rule_run.delay(rule_run.id)
