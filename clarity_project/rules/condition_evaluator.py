@@ -10,19 +10,21 @@ logger = logging.getLogger(__name__)
 
 def evaluate_rule_conditions(rule: Rule, school_application: SchoolApplication) -> bool:
     result = None
-    for condition in rule.conditions.all():
+    for rule_condition in rule.rule_conditions.all():
+        condition = rule_condition.condition
+        conjunction = rule_condition.conjunction
         condition_evaluation = CONDITION_TYPE_MAPPING[condition.condition_type](school_application)
         logger.debug(
             "Evaluating condition", extra={"condition_id": condition.id, "condition_type": condition.condition_type}
         )
         if result is None:
             result = condition_evaluation
-        elif condition.conjunction == ConditionConjunctionChoices.AND:
+        elif conjunction == ConditionConjunctionChoices.AND:
             result = result and condition_evaluation
-        elif condition.conjunction == ConditionConjunctionChoices.OR:
+        elif conjunction == ConditionConjunctionChoices.OR:
             result = result or condition_evaluation
         else:
-            raise NotImplementedError(condition.conjunction)
+            raise NotImplementedError(conjunction)
 
         logger.debug(
             "Evaluated condition",
