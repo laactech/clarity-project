@@ -16,7 +16,7 @@ class SchoolApplicationViewSet(
     serializer_class = SchoolApplicationSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(submitter=self.request.user)
         school_application_id = serializer.data["id"]
 
         application_submission_rules = Rule.objects.filter(
