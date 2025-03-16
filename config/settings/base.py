@@ -81,13 +81,13 @@ THIRD_PARTY_APPS = [
     "django_celery_beat",
     "rest_framework",
     "rest_framework.authtoken",
-    "corsheaders",
-    "drf_spectacular",
 ]
 
 LOCAL_APPS = [
     "clarity_project.users",
-    # Your stuff: custom apps go here
+    "clarity_project.applications",
+    "clarity_project.documents",
+    "clarity_project.rules"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
