@@ -1,11 +1,11 @@
 from django.db import models
 
 
-class TriggerChoices(models.TextChoices):
+class TriggerTypeChoices(models.TextChoices):
     APPLICATION_SUBMISSION = "application_submission", "Application Submission"
 
 
-class ConditionChoices(models.TextChoices):
+class ConditionTypeChoices(models.TextChoices):
     IS_BUSINESS_OWNER = "is_business_owner", "Is Business Owner"
     IS_RETURNING = "is_returning", "Is Returning"
     FILED_US_TAXES = "filed_us_taxes", "Filed US Taxes"
@@ -16,5 +16,5 @@ class ConditionConjunctionChoices(models.TextChoices):
     OR = "or", "Or"
 
 
-class ActionChoices(models.TextChoices):
+class ActionTypeChoices(models.TextChoices):
     DOCUMENT_REQUESTED = "document_requested", "Document Requested"

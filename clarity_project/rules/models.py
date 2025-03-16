@@ -2,23 +2,23 @@ from django.db import models
 
 from clarity_project.applications.models import SchoolApplication
 from clarity_project.core.mixins import BaseModel
-from clarity_project.rules.enums import ActionChoices
-from clarity_project.rules.enums import ConditionChoices
+from clarity_project.rules.enums import ActionTypeChoices
+from clarity_project.rules.enums import ConditionTypeChoices
 from clarity_project.rules.enums import ConditionConjunctionChoices
-from clarity_project.rules.enums import TriggerChoices
+from clarity_project.rules.enums import TriggerTypeChoices
 
 
 class Trigger(BaseModel):
-    trigger_type = models.CharField(choices=TriggerChoices.choices, max_length=50)
+    trigger_type = models.CharField(choices=TriggerTypeChoices.choices, max_length=50)
 
 
 class Condition(BaseModel):
-    condition_type = models.CharField(choices=ConditionChoices.choices, max_length=50)
+    condition_type = models.CharField(choices=ConditionTypeChoices.choices, max_length=50)
     conjunction = models.CharField(choices=ConditionConjunctionChoices.choices, max_length=50)
 
 
 class Action(BaseModel):
-    action_type = models.CharField(choices=ActionChoices.choices, max_length=50)
+    action_type = models.CharField(choices=ActionTypeChoices.choices, max_length=50)
 
 
 class Rule(BaseModel):
