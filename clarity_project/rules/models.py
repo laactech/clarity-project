@@ -31,7 +31,7 @@ class Action(BaseModel):
                                           null=True, blank=True)
 
     class Meta:
-        constraints = [UniqueConstraint(fields=["action_type"], name="action_type_unique"),
+        constraints = [
                        CheckConstraint(
                            check=models.Q(action_type=ActionTypeChoices.DOCUMENT_REQUESTED, requested_document_types__isnull=False)
                                  | ~models.Q(action_type=ActionTypeChoices.DOCUMENT_REQUESTED),

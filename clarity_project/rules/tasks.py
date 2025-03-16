@@ -24,3 +24,6 @@ def execute_rule_run(rule_run_id: str):
         logger.info("Running actions due to condition result evaluation", extra={"rule_run_id": rule_run_id})
         for action in rule.actions.all():
             run_action(action, rule_run.school_application)
+
+    rule_run.completed = True
+    rule_run.save(update_fields=["completed"])

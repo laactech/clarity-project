@@ -17,6 +17,7 @@ def evaluate_rule_conditions(rule: Rule, school_application: SchoolApplication) 
         logger.info(
             "Evaluating condition", extra={"condition_id": condition.id, "condition_type": condition.condition_type}
         )
+        print(condition_evaluation)
         if result is None:
             result = condition_evaluation
         elif conjunction == ConditionConjunctionChoices.AND:
