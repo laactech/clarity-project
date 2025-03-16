@@ -16,7 +16,9 @@ def execute_rule_run(rule_run_id: str):
     logger.info("Executing rule run", extra={"rule_run_id": rule_run_id})
 
     condition_result = evaluate_rule_conditions(rule, rule_run.school_application)
-    logger.info("Condition for rule evaluated", extra={"condition_result": condition_result, "rule_run_id": rule_run_id})
+    logger.info(
+        "Condition for rule evaluated", extra={"condition_result": condition_result, "rule_run_id": rule_run_id}
+    )
 
     if condition_result:
         logger.info("Running actions due to condition result evaluation", extra={"rule_run_id": rule_run_id})

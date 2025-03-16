@@ -3,8 +3,8 @@ from django.db import models
 from clarity_project.applications.models import SchoolApplication
 from clarity_project.core.mixins import BaseModel
 from clarity_project.rules.enums import ActionTypeChoices
-from clarity_project.rules.enums import ConditionTypeChoices
 from clarity_project.rules.enums import ConditionConjunctionChoices
+from clarity_project.rules.enums import ConditionTypeChoices
 from clarity_project.rules.enums import TriggerTypeChoices
 
 

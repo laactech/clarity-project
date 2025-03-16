@@ -1,11 +1,13 @@
 import logging
 
+from django.core.mail import send_mail
+
 from clarity_project.applications.models import SchoolApplication
 from clarity_project.rules.enums import ActionTypeChoices
 from clarity_project.rules.models import Action
-from django.core.mail import send_mail
 
 logger = logging.getLogger(__name__)
+
 
 def run_action(action: Action, school_application: SchoolApplication):
     logger.debug("Running action", extra={"action": action.id, "action_type": action.action_type})

@@ -1,7 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 from clarity_project.core.mixins import BaseModel
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
