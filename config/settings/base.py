@@ -87,7 +87,7 @@ LOCAL_APPS = [
     "clarity_project.users",
     "clarity_project.applications",
     "clarity_project.documents",
-    "clarity_project.rules"
+    "clarity_project.rules",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

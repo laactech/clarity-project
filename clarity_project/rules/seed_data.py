@@ -1,7 +1,11 @@
 from sqlite3 import IntegrityError
 
-from clarity_project.rules.enums import TriggerTypeChoices, ActionTypeChoices, ConditionTypeChoices
-from clarity_project.rules.models import Trigger, Action, Condition
+from clarity_project.rules.enums import ActionTypeChoices
+from clarity_project.rules.enums import ConditionTypeChoices
+from clarity_project.rules.enums import TriggerTypeChoices
+from clarity_project.rules.models import Action
+from clarity_project.rules.models import Condition
+from clarity_project.rules.models import Trigger
 
 
 def seed_data():

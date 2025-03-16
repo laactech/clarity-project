@@ -26,7 +26,6 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 sys.path.append(str(BASE_DIR / "clarity_project"))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
 
-print(str(BASE_DIR / "clarity_project"))
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
