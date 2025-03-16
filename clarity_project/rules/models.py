@@ -1,8 +1,10 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import UniqueConstraint
+from django.db.models import UniqueConstraint, CheckConstraint
 
 from clarity_project.applications.models import SchoolApplication
 from clarity_project.core.mixins import BaseModel
+from clarity_project.documents.enums import DocumentType
 from clarity_project.rules.enums import ActionTypeChoices
 from clarity_project.rules.enums import ConditionConjunctionChoices
 from clarity_project.rules.enums import ConditionTypeChoices
@@ -25,9 +27,17 @@ class Condition(BaseModel):
 
 class Action(BaseModel):
     action_type = models.CharField(choices=ActionTypeChoices.choices, max_length=50)
+    requested_document_types = ArrayField(models.CharField(choices=DocumentType.choices, max_length=50),
+                                          null=True, blank=True)
 
     class Meta:
-        constraints = [UniqueConstraint(fields=["action_type"], name="action_type_unique")]
+        constraints = [UniqueConstraint(fields=["action_type"], name="action_type_unique"),
+                       CheckConstraint(
+                           check=models.Q(action_type=ActionTypeChoices.DOCUMENT_REQUESTED, requested_document_types__isnull=False)
+                                 | ~models.Q(action_type=ActionTypeChoices.DOCUMENT_REQUESTED),
+                           name="requested_document_types_required_for_document_requested"
+                       )
+                       ]
 
 
 class Rule(BaseModel):

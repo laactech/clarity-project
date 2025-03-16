@@ -14,7 +14,7 @@ def evaluate_rule_conditions(rule: Rule, school_application: SchoolApplication) 
         condition = rule_condition.condition
         conjunction = rule_condition.conjunction
         condition_evaluation = CONDITION_TYPE_MAPPING[condition.condition_type](school_application)
-        logger.debug(
+        logger.info(
             "Evaluating condition", extra={"condition_id": condition.id, "condition_type": condition.condition_type}
         )
         if result is None:
@@ -26,7 +26,7 @@ def evaluate_rule_conditions(rule: Rule, school_application: SchoolApplication) 
         else:
             raise NotImplementedError(conjunction)
 
-        logger.debug(
+        logger.info(
             "Evaluated condition",
             extra={"condition_id": condition.id, "result": result, "condition_type": condition.condition_type},
         )
