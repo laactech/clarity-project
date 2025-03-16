@@ -60,7 +60,7 @@ python_files = [
 
 # ==== Coverage ====
 [tool.coverage.run]
-include = ["siftfox_app/**"]
+include = ["clarity_project/**"]
 omit = ["*/migrations/*", "*/tests/*"]
 plugins = ["django_coverage_plugin"]
 
