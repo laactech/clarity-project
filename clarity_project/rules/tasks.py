@@ -9,7 +9,7 @@ from clarity_project.rules.models import RuleRun
 logger = logging.getLogger(__name__)
 
 
-@shared_task()
+@shared_task(autoretry_for=(RuleRun.DoesNotExist,), max_retries=2, retry_backoff=True)
 def execute_rule_run(rule_run_id: str):
     rule_run = RuleRun.objects.get(id=rule_run_id)
     rule = rule_run.rule

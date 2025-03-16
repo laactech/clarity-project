@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 def run_action(action: Action, school_application: SchoolApplication):
     logger.info("Running action", extra={"action": action.id, "action_type": action.action_type})
-    ACTION_TYPE_MAPPING[action.action_type](school_application)
+    ACTION_TYPE_MAPPING[action.action_type](action, school_application)
 
 
 def _run_document_requested_action(action: Action, school_application: SchoolApplication):
