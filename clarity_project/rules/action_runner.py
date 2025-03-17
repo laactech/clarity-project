@@ -24,12 +24,21 @@ def _run_document_requested_action(action: Action, school_application: SchoolApp
         [school_application.submitter.email],
         fail_silently=False,
     )
-    logger.info("Sent email", extra={"action": action.id, "action_type": action.action_type,"email": school_application.submitter.email})
+    logger.info(
+        "Sent email",
+        extra={"action": action.id, "action_type": action.action_type, "email": school_application.submitter.email},
+    )
 
     for doc_type in action.requested_document_types:
         Document.objects.create(document_type=doc_type, last_email_notification_sent_at=timezone.now())
-    logger.info("Created documents", extra={"action": action.id, "action_type": action.action_type,
-                                            "requested_document_types": action.requested_document_types})
+    logger.info(
+        "Created documents",
+        extra={
+            "action": action.id,
+            "action_type": action.action_type,
+            "requested_document_types": action.requested_document_types,
+        },
+    )
 
 
 ACTION_TYPE_MAPPING = {
